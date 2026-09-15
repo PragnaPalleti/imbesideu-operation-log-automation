@@ -98,15 +98,27 @@ pre-check   HUMAN REVIEW
 
 The prototype is deterministic. No LLM is required for arithmetic or policy comparison. AI could later help interpret unstructured policy documents, but final approval logic should remain deterministic and auditable.
 
-## 9. Human-in-the-Loop
-- **Automated:** extraction and deterministic pre-check when required fields and policy are known.
-- **Human:** ambiguous policy, missing fields, exceptional categories and final approval.
-- **Escalation:** any amount above the configured threshold or an unrecognized category.
+## 9. Why this implementation form
+A deterministic Python decision layer was chosen because the observed candidate has a relatively explicit rule boundary, the prototype can be completed and tested within the case-study scope, and the resulting decisions are easy to audit.
 
-## 10. Impact
+Two alternatives were deliberately deferred:
+- **LLM-first agent:** useful for interpreting messy policy documents, but unnecessary for arithmetic/rule comparison and harder to make deterministic for approval decisions.
+- **UI/RPA automation:** potentially useful later, but brittle without stable production selectors/APIs and more exposed to application-layout changes.
+
+The recommended production path is therefore API-first where available, with deterministic policy evaluation and a human fallback. An LLM can be added later as an interpretation layer for unstructured policy material, without owning the final approval decision.
+
+## 10. Human-in-the-Loop and remaining manual work
+- **Automated:** extraction and deterministic pre-check when required fields and the applicable policy version are known.
+- **Human:** ambiguous policy, missing fields, exceptional categories, policy changes and final approval.
+- **Escalation:** any amount above the configured threshold or an unrecognized category.
+- **Still manual after deployment:** exception investigation, policy ownership, final authorization, payment release and handling cases where source-system data cannot be trusted.
+
+The realistic impact is reduced repetitive pre-check effort, not removal of the end-to-end expense workflow. The logs demonstrate repetition and rule visibility; they do not justify a production savings percentage.
+
+## 11. Impact
 Observed data establishes repetition, not production savings. Test-environment dwell time may differ from production, so absolute time savings should not be claimed from these logs alone. A production ROI study should measure actual handling time, exception rate, approval rate and API/integration feasibility before deployment.
 
-## 11. Risks → Evidence → Impact → Mitigation
+## 12. Risks → Evidence → Impact → Mitigation
 **Incorrect policy rule →** repeated policy-document consultation and threshold-sensitive examples → false approval risk → version rules, attach policy version to each decision, require human review for exceptions.
 
 **Telemetry incompleteness →** screen text is sparse and `text_input_complete` is unreliable → missing facts can lower confidence → use multiple event sources and escalate low-confidence cases.
@@ -117,14 +129,14 @@ Observed data establishes repetition, not production savings. Test-environment d
 
 **Governance/privacy →** logs contain operational and potentially sensitive employee/business information → inappropriate automation can create compliance risk → least-privilege access, audit logs, retention controls and explicit approval ownership.
 
-## 12. Limitations
+## 13. Limitations
 - Dataset B has no ground truth, so process discovery is evidence-based rather than formally scored.
 - The current B segment output is an **observable-anchor candidate segmentation**, not a claim of perfect business-boundary recovery.
 - The 4-person figure is a **recording-identity/machine proxy**, not a verified HR headcount.
 - Production APIs, authentication and authoritative system state were not provided.
 - Production waiting times may differ from the test environment.
 
-## 13. Reproducibility
+## 14. Reproducibility
 ```bash
 python scripts/run_pipeline.py --dataset-a /path/to/dataset_a --dataset-b /path/to/dataset_b --out outputs
 python scripts/evaluate_a.py --dataset-a /path/to/dataset_a --out outputs/a_anchor_evaluation.json
@@ -133,7 +145,7 @@ pytest -q
 python prototype/expense_checker.py
 ```
 
-## 14. Seven-Day Allocation
+## 15. Seven-Day Allocation
 The task was executed as a compressed implementation cycle rather than by fabricating seven historical workdays. For a seven-day delivery window, the work maps cleanly to:
 
 | Day | Focus | Reason |
@@ -148,5 +160,5 @@ The task was executed as a compressed implementation cycle rather than by fabric
 
 This allocation describes the intended seven-day work decomposition; the repository work itself was completed in a compressed cycle with the same sequence of technical decisions.
 
-## 15. Differentiator
+## 16. Differentiator
 The project is not just “cluster the logs and automate the most frequent task.” The differentiator is a **confidence-aware bridge from telemetry to automation readiness**: use observable workflow fingerprints to identify repeated work, separate observed evidence from engineering assumptions, and automate only the deterministic portion while routing exceptions to humans.
