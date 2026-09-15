@@ -17,7 +17,7 @@ def iter_events(zip_files):
      for line in z.open(n):
       try: e=json.loads(line); e['_session']=sid; yield e
       except Exception: continue
-def b_files(root): return [f for f in glob.glob(os.path.join(root,'*.zip')) if os.path.basename(f)!='B7.zip']
+def b_files(root): return [f for f in glob.glob(os.path.join(root,'*.zip'))]
 def run(a_root,b_root,out):
  os.makedirs(out,exist_ok=True); bycat=defaultdict(list); case=defaultdict(list)
  for e in iter_events(b_files(b_root)):
