@@ -1,0 +1,7 @@
+{
+  "valid": true,
+  "segments": 120,
+  "sessions": 15,
+  "errors": [],
+  "overlap_allowed_for_interleaved_workflows": true
+}
