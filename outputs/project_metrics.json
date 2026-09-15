@@ -4,7 +4,9 @@
   "dataset_a_gt_manifest_executions": 2009,
   "dataset_b_sessions": 15,
   "dataset_b_events": 20477,
+  "dataset_b_observed_operators": 4,
   "b_candidate_process_families": 11,
+  "b_candidate_segments": 86,
   "top_automation_candidate": {
     "process": "expense_review",
     "observed_completion_events": "177",
