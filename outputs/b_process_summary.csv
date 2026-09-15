@@ -1,0 +1,12 @@
+process,observed_completion_events,sessions,observed_span_minutes,evidence
+expense_review,177,15,169.71,explicit completion/status text
+inventory_adjustment,31,8,133.37,explicit completion/status text
+invoice_reconciliation,29,8,169.5,explicit completion/status text
+contract_management,28,7,155.38,explicit completion/status text
+purchase_order,26,8,128.21,explicit completion/status text
+attendance_review,23,6,93.09,explicit completion/status text
+onboarding_check,22,9,133.57,explicit completion/status text
+payment_processing,21,5,86.08,explicit completion/status text
+it_request,21,5,106.76,explicit completion/status text
+payroll_change,16,6,160.41,explicit completion/status text
+benefits_request,12,4,70.58,explicit completion/status text
