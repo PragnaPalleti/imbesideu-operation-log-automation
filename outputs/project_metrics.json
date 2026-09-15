@@ -1,0 +1,19 @@
+{
+  "dataset_a_sessions": 63,
+  "dataset_a_events": 162768,
+  "dataset_a_gt_manifest_executions": 2009,
+  "dataset_b_sessions": 15,
+  "dataset_b_events": 20477,
+  "b_candidate_process_families": 11,
+  "top_automation_candidate": {
+    "process": "expense_review",
+    "observed_completion_events": "177",
+    "sessions": "15",
+    "observed_span_minutes": "169.71",
+    "evidence": "explicit completion/status text",
+    "opportunity_score": 95.7,
+    "feasibility_assumption": 0.9,
+    "risk_assumption": 0.18,
+    "standardization_proxy": 0.95
+  }
+}
