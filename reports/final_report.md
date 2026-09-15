@@ -16,10 +16,13 @@ Observed in this run:
 - Dataset A ground-truth manifests: **2,009 execution records**.
 - Dataset A `gt.jsonl`: **1,819 distinct process-start records after case/session de-duplication**.
 - Dataset B: **15 sessions / 20,477 events**.
+- Dataset B represents **4 distinct recording identities/machines**, treated as an operator-count proxy because the supplied B manifests do not expose human names.
 - B discovery: **11 recurring workflow families with explicit completion/status text**.
 
 ## 4. Process Reconstruction and Segmentation
-A single inactivity threshold performs poorly because office work contains pauses, app switching and interleaving. The selected observable signal is a recurring case/task identifier visible in UI automation telemetry, combined with temporal continuity. For Dataset B, the inference path does not read ground truth because none exists.
+A single inactivity threshold performs poorly because office work contains pauses, app switching and interleaving. The selected observable signal is a recurring case/task identifier in **structured interaction targets**, combined with temporal continuity. Importantly, case IDs are not extracted from full OCR/setup text because that text can contain dashboard rows and unrelated workflow references. For Dataset B, the inference path does not read ground truth because none exists.
+
+The current B output contains **86 candidate execution segments across all 15 sessions**. Overlap is permitted because the source task explicitly warns that workers can suspend one process and return to it later; the output therefore represents independently observed workflow instances rather than forcing the entire timeline into mutually exclusive blocks.
 
 ### Dataset A validation
 This validation measures whether an observable case anchor appears soon after a ground-truth process start; it is deliberately reported as an **anchor-timing diagnostic**, not as a fabricated end-to-end F1 score.
@@ -117,6 +120,7 @@ Observed data establishes repetition, not production savings. Test-environment d
 ## 12. Limitations
 - Dataset B has no ground truth, so process discovery is evidence-based rather than formally scored.
 - The current B segment output is an **observable-anchor candidate segmentation**, not a claim of perfect business-boundary recovery.
+- The 4-person figure is a **recording-identity/machine proxy**, not a verified HR headcount.
 - Production APIs, authentication and authoritative system state were not provided.
 - Production waiting times may differ from the test environment.
 
@@ -129,8 +133,20 @@ pytest -q
 python prototype/expense_checker.py
 ```
 
-## 14. Development Allocation
-The repository worklog records the actual investigation and validation sequence. The implementation intentionally separates observed evidence from assumptions and documents the remaining segmentation limitations rather than overstating accuracy.
+## 14. Seven-Day Allocation
+The task was executed as a compressed implementation cycle rather than by fabricating seven historical workdays. For a seven-day delivery window, the work maps cleanly to:
+
+| Day | Focus | Reason |
+|---|---|---|
+| 1 | Data audit and schema validation | Establish session/chunk semantics and avoid false boundaries. |
+| 2 | Dataset A signal discovery and baseline rejection | Validate observable anchors against GT and reject weak gap-only heuristics. |
+| 3 | Segmentation refinement and evaluation | Separate structured UI evidence from noisy OCR/setup text. |
+| 4 | Dataset B discovery and process profiling | Infer recurring workflows without using unavailable ground truth. |
+| 5 | Automation opportunity scoring and candidate selection | Balance repetition, standardization, feasibility and risk. |
+| 6 | Prototype implementation and tests | Build a deterministic, auditable pre-check with human escalation. |
+| 7 | Validation, documentation and repository hardening | Re-run tests, validate outputs, document limitations and prepare submission. |
+
+This allocation describes the intended seven-day work decomposition; the repository work itself was completed in a compressed cycle with the same sequence of technical decisions.
 
 ## 15. Differentiator
 The project is not just “cluster the logs and automate the most frequent task.” The differentiator is a **confidence-aware bridge from telemetry to automation readiness**: use observable workflow fingerprints to identify repeated work, separate observed evidence from engineering assumptions, and automate only the deterministic portion while routing exceptions to humans.
