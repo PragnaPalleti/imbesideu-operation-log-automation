@@ -1,5 +1,13 @@
 # From Operation Logs to an Automation Proposal
 
+## Candidate Information
+
+- **Full Name:** Palleti Pragna
+- **University:** IIT (ISM) Dhanbad
+- **Department/Major:** Mathematics and Computing
+- **Email:** [REPLACE WITH EXACT ROUND-1 EMAIL]
+
+
 A reproducible case-study implementation that turns desktop/browser telemetry into business-work evidence, evaluates an observable segmentation signal on Dataset A, applies the same inference principle to Dataset B, and prototypes a safe automation boundary.
 
 ## Executive summary
@@ -114,3 +122,23 @@ The supplied telemetry does not expose production APIs or authoritative business
 ## Submission artifacts
 
 The required submission artifacts are present as repository files: `outputs/segments.jsonl`, Git history, `reports/final_report.md`, and `worklog/worklog.md`. Supporting schema, analysis, validation, prototype and visualization artifacts are included so a reviewer can inspect the reasoning rather than only the final answer.
+
+## Submission Requirements
+
+This repository is prepared for the company's Round 2 submission. Before submission, verify that the repository is **Private**, the exact email used in the Round 1 application is entered above, and all seven reviewer accounts are invited as collaborators.
+
+### Reviewer accounts
+- yasuhironose@imbesideyou.world
+- mamindla@imbesideyou.world
+- jayeshahire@imbesideyou.world
+- ashwingaikwad@imbesideyou.world
+- namansolanki@imbesideyou.world
+- kushakjafry@imbesideyou.world
+- rajeevkumar@imbesideyou.world
+
+### Required submission artifacts
+- `outputs/segments.jsonl`
+- Final report
+- Work log
+
+The repository should not contain the supplied raw case-study ZIP archives.
